@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {initial,workoutSchema,time} from '../lib/data.ts';
+import {strengthVersions} from '../lib/training.ts';
+import {checklistRows,checklistResult,changeChecklist,parseRunTime,runSummary,sameWorkout} from '../lib/logging.ts';
+const blank={id:'test',date:'2026-09-26',name:'Gym',sessionId:'A',planName:initial.plan.name,status:'partial',minutes:null,effort:null,notes:'',sets:[],distance:0,seconds:0,splits:[],runType:'none',pushups:null,situps:null,testType:'none'};
+let rows=checklistRows(blank,strengthVersions[1]);
+for(const [original,replacement] of [['Flat dumbbell bench press','Machine chest press'],['Seated cable row','Lat pulldown']]){const row=rows.find(r=>r.exercise===original);row.exercise=replacement;row.done=true;row.sets=row.sets.map(s=>({...s,reps:10,exercise:replacement}));}
+const logged=checklistResult(rows);assert.equal(logged.sets.length,6);assert.equal(logged.status,'partial');assert.equal(logged.checklist.filter(r=>r.done).length,2);assert.equal(logged.sets.some(s=>s.exercise==='Incline dumbbell bench press'),false);
+assert.ok(workoutSchema.safeParse({...blank,...logged}).success);
+const reloaded=checklistRows({...blank,...logged});assert.deepEqual(checklistResult(reloaded),logged);
+reloaded.find(r=>r.exercise==='Lat pulldown').done=false;assert.equal(checklistResult(reloaded).sets.length,3);
+assert.throws(()=>checklistResult([{...rows[0],done:true}]),/actual amount/);
+assert.equal(changeChecklist(rows,strengthVersions[0]).filter(r=>r.done).length,2);
+assert.equal(parseRunTime('12.43'),763);assert.equal(parseRunTime('13:51'),831);assert.ok(Number.isNaN(parseRunTime('12:99')));
+const segments=[{distance:2.2,seconds:763,recoveryAfter:60,recoveryApproximate:true},{distance:2.2,seconds:831,recoveryAfter:null}];
+const summary=runSummary(segments,true);assert.equal(summary.distance,4.4);assert.equal(summary.seconds,1594);assert.equal(time(summary.seconds),'26:34');assert.equal(time(summary.elapsed),'27:34');assert.equal(summary.name,'2 × 2.2 km run repeats');assert.equal(summary.runType,'interval');assert.equal(summary.approximate,true);
+assert.equal(runSummary([{distance:5,seconds:1800,recoveryAfter:null}],false).runType,'run');
+assert.equal(runSummary([{...segments[0],recoveryAfter:null},segments[1]],true).elapsed,null);
+const record={...blank,...logged};assert.equal(sameWorkout(record,{...record,id:'other'}),true);assert.equal(sameWorkout(record,{...record,id:'other',date:'2026-09-25'}),false);
+console.log('Logging checks passed: checklist omissions, swaps, exact set counts, edit round-trip, run classification/totals, unknowns and duplicate detection.');

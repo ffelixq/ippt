@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import { initial, points, PUSH, SIT, RUN, seconds, stateSchema, planSchema, weekStart, report } from '../lib/data.ts';
+assert.equal(PUSH.length,61);assert.equal(SIT.length,61);assert.equal(RUN.length,46);
+assert.equal(points(25,40,760).total,63);
+assert.equal(points(0,33,820).total,38);
+assert.equal(points(25,40,761).run,28);
+assert.equal(points(60,60,510).total,100);
+assert.equal(points(60,60,961).eligible,false);
+assert.equal(points(14,60,510).eligible,false);
+assert.equal(points(15,15,960).total,3);
+assert.equal(seconds('13:40'),820);assert.ok(Number.isNaN(seconds('13:60')));
+assert.ok(stateSchema.safeParse(initial).success);
+assert.equal(planSchema.safeParse({...initial.plan,sessions:[initial.plan.sessions[0],initial.plan.sessions[0]]}).success,false);
+assert.equal(stateSchema.safeParse({...initial,profile:{...initial.profile,weight:-1}}).success,false);
+assert.equal(weekStart('2026-09-27'),'2026-09-21');
+assert.ok(report(initial).includes('baselinePushups'));assert.ok(report(initial).includes('null'));
+console.log('Core checks passed: score boundaries, station minimums, data validation, week boundaries, exports.');
