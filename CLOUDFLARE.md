@@ -5,6 +5,13 @@ backdated edits, plans, exports and offline drafts. The Cloudflare version uses
 one fixed account (`felixdasumo`) and has no registration route. It does not
 accept Sites/ChatGPT identity headers. The original Sites deployment is separate.
 
+## Verified build connection
+
+A push to `main` on 5 October 2026 triggered **Workers Builds: stride** and
+completed successfully (Cloudflare version `37d67094-c3fc-44ca-9014-84ce9a8b3e0a`).
+This verifies the GitHub build connection. It does not verify the runtime
+password secret, D1 schema, original workout transfer, or live login.
+
 ## First deployment
 
 1. Use Node 24 and the pinned pnpm version. Install with `pnpm install --frozen-lockfile`.
