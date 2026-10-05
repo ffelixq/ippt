@@ -1,4 +1,4 @@
-const CACHE='stride-shell-v8';
+const CACHE='stride-shell-v9-account';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('stride-shell-')&&k!==CACHE)await caches.delete(k);await self.clients.claim()})()));
 self.addEventListener('fetch',event=>{const r=event.request,u=new URL(r.url);if(r.method!=='GET'||u.origin!==self.location.origin||u.pathname.startsWith('/api/')||u.pathname.includes('chatgpt')||u.pathname==='/callback')return;if(r.mode==='navigate'){event.respondWith(fetch(r).then(async response=>{if(response.ok&&!response.redirected){const c=await caches.open(CACHE);await c.put('/',response.clone())}return response}).catch(async()=>{const c=await caches.open(CACHE);return await c.match('/')||Response.error()}));return}if(/\.(js|css|svg|webmanifest)$/.test(u.pathname)){event.respondWith((async()=>{const c=await caches.open(CACHE);const old=await c.match(r);if(old)return old;const res=await fetch(r);if(res.ok)await c.put(r,res.clone());return res})())}});

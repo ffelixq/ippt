@@ -82,3 +82,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 @media(max-width:380px){.set-editor{grid-template-columns:minmax(0,1fr)}}
 .log-checklist{display:grid;gap:12px}.log-exercise{border:1px solid var(--border);border-radius:16px;min-width:0;overflow:hidden}.log-exercise.is-done{border-color:var(--primary)}.log-exercise-toggle{display:flex;align-items:center;gap:14px;padding:17px;cursor:pointer;min-height:66px}.log-exercise-toggle>span{min-width:0}.log-exercise-toggle b{display:block;font-size:15px;overflow-wrap:anywhere}.log-exercise-toggle small{display:block;color:var(--muted-foreground);font-size:12px;line-height:1.5;margin-top:4px}.log-exercise-body{display:grid;gap:18px;padding:0 17px 17px}.log-exercise-body details{border-top:1px solid var(--border);padding-top:8px}.log-set{padding:15px 0;border-bottom:1px solid var(--border)}.log-set>b{display:block;margin-bottom:12px}.run-entry{display:grid;gap:18px}.run-entry-row{padding:18px;border:1px solid var(--border);border-radius:16px}.run-entry-row h3{font-size:16px}.logging-details>summary{padding:16px 0}.logging-details>.form-stack{margin-top:15px}.workout-log input,.workout-log select{min-width:0;max-width:100%}.workout-log .select-control{width:100%}.import-workout{padding:18px;border:1px solid var(--border);border-radius:16px}.import-workout p{font-size:14px}
 @media(max-width:380px){.log-exercise-toggle{padding:14px;gap:10px}.log-exercise-body{padding:0 14px 14px}.run-entry-row{padding:14px}}
+.sign-in-page{min-height:100svh;display:grid;place-items:center;padding:max(28px,env(safe-area-inset-top)) 20px max(28px,env(safe-area-inset-bottom));background:var(--background);overflow-x:hidden}
+.sign-in-wrap{width:min(100%,420px);animation:stride-dialog-appear .3s ease-out}
+.sign-in-brand{justify-content:center;margin:0 0 32px;font-size:28px}
+.sign-in-card{padding:34px 28px!important;border-radius:28px!important;box-shadow:0 16px 56px #00000006}
+.sign-in-card>.round-icon{margin-bottom:24px}
+.sign-in-card>.eyebrow{display:block;margin-bottom:12px;font-size:10px;letter-spacing:.12em}
+.sign-in-card h1{font-size:34px;line-height:1.15;letter-spacing:-1.3px;margin:0 0 12px}
+.sign-in-card>p{font-size:14px;line-height:1.6;margin:0 0 28px;color:var(--muted-foreground)}
+.sign-in-card .field input{min-width:0;width:100%;min-height:50px;font-size:16px}
+.sign-in-card .form-stack{gap:20px}
+.password-control{position:relative;display:block}
+.password-control input{padding-right:50px}
+.password-control .icon-btn{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:44px;height:44px}
+.sign-in-submit{width:100%;justify-content:center;min-height:50px;margin-top:4px}
+.sign-in-footer{text-align:center;font-size:12px;color:var(--muted-foreground);margin:24px 0 0}
+@media(max-width:360px){.sign-in-page{padding-left:14px;padding-right:14px}.sign-in-card{padding:28px 22px!important}.sign-in-card h1{font-size:30px}}

@@ -1,2 +1,2 @@
-import App from './stride';
-export default function Page(){return <App/>}
+import AuthGate from './auth-gate';
+export default function Page(){return <AuthGate/>}

@@ -44,3 +44,8 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# Account secrets and private data migrations
+.dev.vars*
+/.private/
+*.tsbuildinfo

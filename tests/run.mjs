@@ -6,3 +6,5 @@ await import('./intervals.mjs');
 await import('./training.mjs');
 await import('./logging.mjs');
 await import('./exports.mjs');
+
+await import('./auth.mjs');
